@@ -23,6 +23,11 @@ For quick installation, go to the [Releases](https://github.com/NOVE300IQ/modula
    ./modula-1.4.0-x86_64.AppImage
    ```
    *Note: If you have AppImageLauncher installed, it will automatically prompt to integrate Modula Launcher into your system menu.*
+   
+   *Tip: If the AppImage fails to start directly from the terminal with a `/dev/shm` sandbox permission error, run it with the sandbox disabled:*
+   ```bash
+   ./modula-1.4.0-x86_64.AppImage --no-sandbox
+   ```
 
 ### Portable Tarball
 1. Download `modula-1.4.0-x64.tar.xz`.
