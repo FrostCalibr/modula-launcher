@@ -30,3 +30,11 @@ package-lock.json
 !.zed/
 xmcl-electron-app/build/
 Modula Assets/*.msi
+
+# Keep build configuration scripts but ignore build output folders
+!xmcl-electron-app/build/
+!xmcl-electron-app/build/electron-builder.config.ts
+!xmcl-electron-app/build/appinstaller-builder.ts
+xmcl-electron-app/build/output/
+xmcl-electron-app/build/modula_v1.4.0_FINAL/
+

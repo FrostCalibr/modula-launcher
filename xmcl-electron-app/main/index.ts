@@ -7,7 +7,6 @@ import { app } from 'electron'
 import ElectronLauncherApp from './ElectronLauncherApp'
 
 app.setName('Modula')
-app.setVersion('1.4.0')
 
 // Disable sandbox for AppImage to avoid chrome-sandbox permission issues
 // AppImage mounts to /tmp which cannot have proper setuid permissions

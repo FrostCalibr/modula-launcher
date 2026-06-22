@@ -67,7 +67,7 @@ async function buildElectron(config: Configuration, dir: boolean) {
       x64: true,
       arm64: process.platform !== 'win32'
     } : {
-      linux: process.argv.includes('--linux') ? ['zip'] : undefined,
+      linux: process.argv.includes('--linux') ? ['pacman', 'AppImage', 'tar.xz'] : undefined,
       win: process.argv.includes('--win') ? ['nsis', 'zip'] : undefined,
       mac: process.argv.includes('--mac') ? ['dmg', 'zip'] : undefined,
     }),
@@ -111,6 +111,7 @@ async function start() {
         electronVersion: context.electronVersion,
         arch: context.arch,
         types: ['dev'],
+        onlyModules: [], // Skip rebuilding native modules to avoid compiling node-datachannel
       })
       rebuildProcess.lifecycle.on('module-found', (path: string) => {
         console.log(`  ${chalk.blue('•')} rebuild module ${chalk.blue('path')}=${path}`)
@@ -122,7 +123,7 @@ async function start() {
     },
     async afterPack(context) {
       const suffix = context.arch === 3 ? '-arm64' : context.arch === 0 ? '-ia32' : ''
-      const platformName = (context.electronPlatform === 'win32' ? 'win' : context.electronPlatform === 'darwin' ? 'mac' : 'linux') + suffix
+      const platformName = (context.electronPlatformName === 'win32' ? 'win' : context.electronPlatformName === 'darwin' ? 'mac' : 'linux') + suffix
       
       const outDir = 'build/modula_v1.4.0_FINAL'
       await ensureDir(outDir)

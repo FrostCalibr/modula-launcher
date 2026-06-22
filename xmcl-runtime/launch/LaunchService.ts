@@ -313,9 +313,7 @@ export class LaunchService extends AbstractService implements ILaunchService {
         '-XX:+UseStringDeduplication',
         '-XX:+OptimizeStringConcat',
         '-Dusing.modula.optimizer=true',
-        '-Dsun.rmi.dgc.server.gcInterval=2147483646',
-        '-XX:+UseInterpreter',
-        '-XX:+RewriteFrequentCallSites'
+        '-Dsun.rmi.dgc.server.gcInterval=2147483646'
       ]
       
       // Filter out flags already present to avoid duplicates

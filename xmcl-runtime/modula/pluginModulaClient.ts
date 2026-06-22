@@ -1,28 +1,29 @@
-import { InstanceOptionsServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
-import { LauncherApp, LauncherAppPlugin } from '../app/LauncherApp'
+import { LauncherApp, LauncherAppPlugin } from '../app'
 import { join, dirname } from 'path'
 import { ensureDir, writeFile, readFile } from 'fs-extra'
 import { createWriteStream } from 'fs'
 import { ZipFile } from 'yazl'
-import { Logger } from '../infra/logging'
-import { ModulaClientServiceKey } from './ModulaClientService'
+import { Logger } from '../infra/logger'
+import { LaunchService } from '../launch'
+import { InstanceOptionsService } from '../instance'
+import { ModulaClientService } from './ModulaClientService'
 
 /**
  * Modula Client - Launcher Middleware
  * Injects custom UI modifications (like the watermark) directly into launch options.
  */
-const pluginModulaClient: LauncherAppPlugin = (app) => {
+const pluginModulaClient: LauncherAppPlugin = (app: LauncherApp) => {
   const logger = app.getLogger('ModulaClientPlugin')
 
   try {
     Promise.all([
-      app.registry.get(LaunchServiceKey),
-      app.registry.get(ModulaClientServiceKey),
-      app.registry.get(InstanceOptionsServiceKey),
+      app.registry.get(LaunchService),
+      app.registry.get(ModulaClientService),
+      app.registry.get(InstanceOptionsService),
     ]).then(([launchService, modulaService, optionsService]) => {
       launchService.registerMiddleware({
         name: 'modula-client-injector',
-        async onBeforeLaunch(input, payload, context) {
+        async onBeforeLaunch(input: any, payload: any, context: any) {
           if (payload.side === 'client') {
             const port = await app.serverPort
             
@@ -38,7 +39,7 @@ const pluginModulaClient: LauncherAppPlugin = (app) => {
 
               // Patch Prefetched Metadata
               if (payload.options.extraJVMArgs) {
-                const prefetchedIndex = payload.options.extraJVMArgs.findIndex(v => v.includes('authlibinjector.yggdrasil.prefetched'))
+                const prefetchedIndex = payload.options.extraJVMArgs?.findIndex((v: string) => v.includes('authlibinjector.yggdrasil.prefetched')) ?? -1
                 if (prefetchedIndex >= 0) {
                   try {
                     const prefetchedBase64 = payload.options.extraJVMArgs[prefetchedIndex].split('=')[1]
@@ -48,8 +49,8 @@ const pluginModulaClient: LauncherAppPlugin = (app) => {
                       payload.options.extraJVMArgs[prefetchedIndex] = `-Dauthlibinjector.yggdrasil.prefetched=${Buffer.from(prefetched).toString('base64')}`
                       logger.log(`[Modula] Port fixed in prefetched metadata.`)
                     }
-                  } catch (e) {
-                     logger.error('Failed to patch prefetched metadata in middleware:', e)
+                  } catch (e: any) {
+                     logger.warn('Failed to patch prefetched metadata in middleware:', e)
                   }
                 }
               }
@@ -64,7 +65,7 @@ const pluginModulaClient: LauncherAppPlugin = (app) => {
         }
       })
     }).catch(e => {
-      logger.error('Failed to initialize Modula Client Plugin Registry:')
+      logger.warn('Failed to initialize Modula Client Plugin Registry:', e)
       logger.error(e)
     })
   } catch (e) {

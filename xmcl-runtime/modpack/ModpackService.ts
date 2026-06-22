@@ -30,7 +30,7 @@ import {
 import { readEntry } from '@xmcl/unzip'
 import { AnyError } from '@xmcl/utils'
 import filenamify from 'filenamify'
-import { readJson, stat, unlink } from 'fs-extra'
+import { existsSync, readJson, stat, unlink } from 'fs-extra'
 import { dirname, join, relative } from 'path'
 import { Entry, ZipFile as YauzlZipFile } from 'yauzl'
 import { ZipFile } from 'yazl'
@@ -412,7 +412,7 @@ export class ModpackService extends AbstractService implements IModpackService {
           addAsOverride(filePath, file.path)
         }
       } catch (e: any) {
-        this.error(`Failed to process file ${file.path} for modpack export: ${e.message}`)
+        this.error(new Error(`Failed to process file ${file.path} for modpack export: ${e.message}`))
         // If critical file fails, we might want to continue or fail. 
         // For now, we add as override as a last resort if it exists.
         const filePath = join(instancePath, file.path)

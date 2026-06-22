@@ -51,6 +51,7 @@
         "oxlint": "^0.15.5",
         "esbuild": "^0.17.16",
         "tslib": "^2.5.0",
-        "typescript": "5.4.5"
+        "typescript": "5.4.5",
+        "vitest": "^4.0.17"
     }
 }

@@ -118,8 +118,7 @@ export default function createNativeModulePlugin(nodeModules: string): Plugin {
         async ({ path }) => {
           return {
             contents: `
-            import mod from '../../../build/Release/node_datachannel.node';
-            export default mod;
+            export default { PeerConnection: class {} };
             `,
             loader: 'js',
           }

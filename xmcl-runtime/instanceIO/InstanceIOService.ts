@@ -13,7 +13,7 @@ import {
   type ThirdPartyLauncherManifest,
 } from '@xmcl/runtime-api'
 import { AnyError, isSystemError } from '@xmcl/utils'
-import { basename, join } from 'path'
+import { basename, dirname, join } from 'path'
 import { Inject, LauncherAppKey, kGameDataPath, type PathResolver } from '~/app'
 import { SSHManager } from '~/infra'
 import { InstanceService } from '~/instance'

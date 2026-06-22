@@ -2,9 +2,10 @@ import { AbstractService, ExposeServiceKey } from '../service'
 import { LauncherApp, Inject, LauncherAppKey } from '../app'
 import { InstanceService } from '../instance'
 import { join } from 'path'
-import { existsSync, ensureDir, writeFile } from 'fs-extra'
+import { ensureDir, writeFile } from 'fs-extra'
+import { ServiceKey } from '@xmcl/runtime-api'
 
-export const ModulaClientServiceKey = Symbol('ModulaClientServiceKey')
+export const ModulaClientServiceKey: ServiceKey<ModulaClientService> = 'ModulaClientService' as any
 
 @ExposeServiceKey(ModulaClientServiceKey)
 export class ModulaClientService extends AbstractService {
