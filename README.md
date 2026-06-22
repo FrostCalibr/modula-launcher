@@ -1,6 +1,8 @@
-# Modula Launcher
+# Modula Launcher - Linux Support Fork
 
-Modula Launcher is a custom Minecraft launcher built with Electron and Vue (forked from upstream XMCL). This fork adds support for Linux (Wayland & X11) and resolves dependency compilation and launch issues.
+This is a fork of the official [Modula Launcher](https://modula-launcher.in/) focusing specifically on adding Linux support. 
+
+*Note: This fork has been tested on Arch Linux under Wayland (Hyprland).*
 
 ## Releases
 
