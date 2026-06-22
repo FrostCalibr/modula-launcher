@@ -67,7 +67,7 @@ async function buildElectron(config: Configuration, dir: boolean) {
       x64: true,
       arm64: process.platform !== 'win32'
     } : {
-      linux: process.argv.includes('--linux') ? ['pacman', 'AppImage', 'tar.xz'] : undefined,
+      linux: process.argv.includes('--linux') ? ['AppImage', 'tar.xz'] : undefined,
       win: process.argv.includes('--win') ? ['nsis', 'zip'] : undefined,
       mac: process.argv.includes('--mac') ? ['dmg', 'zip'] : undefined,
     }),

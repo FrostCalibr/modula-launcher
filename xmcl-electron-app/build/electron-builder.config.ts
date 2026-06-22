@@ -97,11 +97,8 @@ export const config = {
     icon: 'icons/dark.icns',
     artifactName: 'modula-${version}-${arch}.${ext}',
     target: [
-      { target: 'deb', arch: ['x64', 'arm64'] },
-      { target: 'rpm', arch: ['x64', 'arm64'] },
       { target: 'AppImage', arch: ['x64', 'arm64'] },
       { target: 'tar.xz', arch: ['x64', 'arm64'] },
-      { target: 'pacman', arch: ['x64', 'arm64'] },
     ],
   },
   snap: {
